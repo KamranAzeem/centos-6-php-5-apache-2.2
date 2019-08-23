@@ -6,9 +6,9 @@ CMD ["/usr/sbin/httpd", "-D" , "FOREGROUND" , "-E" , "/proc/self/fd/1"]
 
 RUN  yum -y install httpd \
         php php-xml php-common php-pdo php-gd php-mysql php-pspell php-soap php-cli \
-        php-devel php-imap php-mbstring php-pear  \
+        php-devel php-imap php-mbstring php-pear  pcre pcre-devel \
         ImageMagick ImageMagick-devel gcc make  \
-     && printf '\n' | pecl  install --force --onlyreqdeps imagick \
+     && printf '\n' | pecl  install --force --onlyreqdeps imagick-3.1.2 \
      && sync \
      && echo "extension=imagick.so" > /etc/php.d/imagick.ini \
      && mkdir /etc/httpd/sites-enabled  /var/www/vhosts \
