@@ -104,8 +104,8 @@ KeepAliveTimeout 15
 StartServers       2
 MinSpareServers    2
 MaxSpareServers    2
-ServerLimit      8
-MaxRequestsPerChild  16
+ServerLimit      4
+MaxRequestsPerChild  32
 </IfModule>
 
 # worker MPM
