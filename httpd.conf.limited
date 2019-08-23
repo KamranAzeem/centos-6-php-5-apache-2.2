@@ -93,30 +93,18 @@ KeepAliveTimeout 15
 ## 
 
 # prefork MPM
-# StartServers: number of server processes to start - ~ CPU cores
+# StartServers: number of server processes to start
 # MinSpareServers: minimum number of server processes which are kept spare
 # MaxSpareServers: maximum number of server processes which are kept spare
 # ServerLimit: maximum value for MaxClients for the lifetime of the server
 # MaxClients: maximum number of server processes allowed to start
 # MaxRequestsPerChild: maximum number of requests a server process serves
 
-
-## We have prefork MPM enabled by default in centos 6.
-## Which MPM to choose can be controled by /etc/sysconfig/httpd and using 
-##   the correct name og httpd binary , .e.g /usr/sbin/httpd.worker or /usr/sbin/httpd.event
-## Check which MPM is in use by using: httpd -l and httpd -V
-
 <IfModule prefork.c>
-StartServers     2
-ServerLimit      8
-
-# MinSpareServers    4
-# MaxSpareServers    4
-
+StartServers       2
 MinSpareServers    2
 MaxSpareServers    2
-
-MaxClients       64
+ServerLimit      8
 MaxRequestsPerChild  16
 </IfModule>
 
@@ -128,12 +116,12 @@ MaxRequestsPerChild  16
 # ThreadsPerChild: constant number of worker threads in each server process
 # MaxRequestsPerChild: maximum number of requests a server process serves
 <IfModule worker.c>
-StartServers         2
-MaxClients          128
+StartServers         8
+MaxClients          64
 MinSpareThreads     8
 MaxSpareThreads     8 
-ThreadsPerChild     16
-MaxRequestsPerChild  16
+ThreadsPerChild     32
+MaxRequestsPerChild  128
 </IfModule>
 
 #
@@ -196,7 +184,7 @@ LoadModule negotiation_module modules/mod_negotiation.so
 LoadModule dir_module modules/mod_dir.so
 LoadModule actions_module modules/mod_actions.so
 ## LoadModule speling_module modules/mod_speling.so
-## LoadModule userdir_module modules/mod_userdir.so
+LoadModule userdir_module modules/mod_userdir.so
 LoadModule alias_module modules/mod_alias.so
 LoadModule substitute_module modules/mod_substitute.so
 LoadModule rewrite_module modules/mod_rewrite.so
@@ -209,7 +197,7 @@ LoadModule rewrite_module modules/mod_rewrite.so
 LoadModule cache_module modules/mod_cache.so
 LoadModule suexec_module modules/mod_suexec.so
 LoadModule disk_cache_module modules/mod_disk_cache.so
-## LoadModule cgi_module modules/mod_cgi.so
+LoadModule cgi_module modules/mod_cgi.so
 ## LoadModule version_module modules/mod_version.so
 
 #
@@ -271,7 +259,7 @@ Group apache
 # e-mailed.  This address appears on some server-generated pages, such
 # as error documents.  e.g. admin@your-domain.com
 #
-ServerAdmin webmaster@autogateway.com
+ServerAdmin webmaster@example.com
 
 TraceEnable off
 
@@ -287,9 +275,7 @@ TraceEnable off
 # You will have to access it by its address anyway, and this will make 
 # redirections work in a sensible way.
 #
-#ServerName www.example.com:80
-# ServerName vm1.autogateway.com:80
-ServerName legacy-webserver:80
+ServerName www.example.com:80
 
 #
 # UseCanonicalName: Determines how Apache constructs self-referencing 
@@ -1025,7 +1011,6 @@ BrowserMatch "^Dreamweaver-WebDAV-SCM1" redirect-carefully
 #</VirtualHost>
 
 NameVirtualHost *:80
-# Include sites-enabled/wbitt.com.conf
 Include sites-enabled/*.conf
 
 

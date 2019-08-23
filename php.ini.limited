@@ -114,6 +114,9 @@
 ;   Development Value: E_ALL | E_STRICT
 ;   Production Value: E_ALL & ~E_DEPRECATED
 
+error_reporting = E_ALL & ~E_DEPRECATED
+
+
 ; html_errors
 ;   Default Value: On
 ;   Development Value: On
@@ -229,10 +232,8 @@ engine = On
 ; Development Value: Off
 ; Production Value: Off
 ; http://www.php.net/manual/en/ini.core.php#ini.short-open-tag
-
-;; short_open_tag = On
 short_open_tag = Off
-
+short_open_tag = On
 
 ; Allow ASP-style <% %> tags.
 ; http://www.php.net/manual/en/ini.core.php#ini.asp-tags
@@ -389,8 +390,7 @@ safe_mode_protected_env_vars = LD_LIBRARY_PATH
 ; It receives a comma-delimited list of function names. This directive is
 ; *NOT* affected by whether Safe Mode is turned On or Off.
 ; http://www.php.net/manual/en/ini.sect.safe-mode.php#ini.disable-functions
-
-;; disable_functions =
+disable_functions =
 disable_functions = show_source, system, shell_exec, passthru, exec, phpinfo, popen, proc_open, escapeshellcmd, pcntl_exec, init_set, pclose
 
 ; This directive allows you to disable certain classes for security reasons.
@@ -519,8 +519,8 @@ memory_limit = 32M
 ; Development Value: E_ALL | E_STRICT
 ; Production Value: E_ALL & ~E_DEPRECATED
 ; http://www.php.net/manual/en/errorfunc.configuration.php#ini.error-reporting
-; error_reporting = E_ERROR
 error_reporting = E_ALL & ~E_DEPRECATED
+; error_reporting = E_ERROR
 
 ; This directive controls whether or not and where PHP will output errors,
 ; notices and warnings too. Error output is very useful during development, but
@@ -537,7 +537,7 @@ error_reporting = E_ALL & ~E_DEPRECATED
 ; Development Value: On
 ; Production Value: Off
 ; http://www.php.net/manual/en/errorfunc.configuration.php#ini.display-errors
-; display_errors = On
+; display_errors = Off
 display_errors = Off
 
 ; The display of errors which occur during PHP's startup sequence are handled
@@ -678,9 +678,8 @@ error_log = /var/log/httpd/php_errors.log
 ; Development Value: "GPCS"
 ; Production Value: "GPCS";
 ; http://www.php.net/manual/en/ini.core.php#ini.variables-order
-
-; variables_order = "EGPCS"
 variables_order = "GPCS"
+variables_order = "EGPCS"
 
 ; This directive determines which super global data (G,P,C,E & S) should
 ; be registered into the super global array REQUEST. If so, it also determines
@@ -740,9 +739,8 @@ auto_globals_jit = On
 
 ; Maximum size of POST data that PHP will accept.
 ; http://www.php.net/manual/en/ini.core.php#ini.post-max-size
-
-; post_max_size = 8M
-post_max_size = 1M
+post_max_size = 8M
+; post_max_size = 20M
 
 ; Magic quotes are a preprocessing feature of PHP where PHP will attempt to
 ; escape any character sequences in GET, POST, COOKIE and ENV data which might
@@ -882,7 +880,7 @@ enable_dl = Off
 
 ; Whether to allow HTTP file uploads.
 ; http://www.php.net/manual/en/ini.core.php#ini.file-uploads
-file_uploads = Off
+file_uploads = On
 
 ; Temporary directory for HTTP uploaded files (will use system default if not
 ; specified).
@@ -893,7 +891,6 @@ upload_tmp_dir = /tmp
 ; Maximum allowed size for uploaded files.
 ; http://www.php.net/manual/en/ini.core.php#ini.upload-max-filesize
 ;; upload_max_filesize = 2M
-; upload_max_filesize = 2M
 upload_max_filesize = 1M
 
 ;;;;;;;;;;;;;;;;;;
@@ -963,7 +960,6 @@ default_socket_timeout = 60
 ; Defines the default timezone used by the date functions
 ; http://www.php.net/manual/en/datetime.configuration.php#ini.date.timezone
 ;date.timezone =
-date.timezone = "Europe/Oslo"
 
 ; http://www.php.net/manual/en/datetime.configuration.php#ini.date.default-latitude
 ;date.default_latitude = 31.7667
